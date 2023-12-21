@@ -1,79 +1,78 @@
 <template>
-    <div class="promotion" :style="{backgroundColor: color}">
-        <img :src=image alt="logo">
-        <div>
-            <p>{{ title }}</p>
-            <button>
-                Shop Now
-                <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g id="fi-rs-arrow-small-right 1" clip-path="url(#clip0_1460_147)">
-                <g id="01 align center">
-                <path id="Vector" d="M10.345 4.32164L6.7675 0.744141L5.58917 1.92247L8.33333 4.66664H0V6.33331H8.33333L5.58917 9.07747L6.7675 10.2558L10.345 6.67831C10.6575 6.36576 10.833 5.94191 10.833 5.49997C10.833 5.05803 10.6575 4.63419 10.345 4.32164Z" fill="white"/>
-                </g>
-                </g>
-                <defs>
-                <clipPath id="clip0_1460_147">
-                <rect width="10.8333" height="10" fill="white" transform="translate(0 0.5)"/>
-                </clipPath>
-                </defs>
-                </svg>
-            </button>
+    <div :style="{ backgroundColor : bg_color }" class="Promotions">
+        <div class="letter_container">
+            <div :style="{color : letter_color }" class="letter">{{ letter }}</div>
+            <Buttons
+                class="button"
+                :text="buttonProps && buttonProps.text"
+                :color="buttonProps && buttonProps.color"
+                :bg_color="buttonProps && buttonProps.bg_color"
+            />
         </div>
+        <img :src='image' class="img"/>
     </div>
 </template>
 
 <script>
-    export default {
-        name: 'Promotion',
-        props: ['title', 'color', 'image'],
-        methods: {
-            getImageUrl(image) {
-                return new URL(image, import.meta.url)
-            }
-        }
-    }
+import Buttons from './button.vue'
+
+export default{
+    name: "Promotions",
+    props: ["image", "letter", "letter_color", "bg_color", "buttonProps"],
+    components: {
+        Buttons,
+    },
+};
 
 </script>
 
 <style scoped>
-.promotion {
-    z-index: -1;
+@import "https://unicons.iconscout.com/release/v4.0.8/css/line.css";
+@import url('https://fonts.googleapis.com/css2?family=Knewave&family=Montserrat:wght@400;700&family=Quicksand:wght@600&family=Silkscreen:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Knewave&family=Lato&family=Montserrat:wght@400;700&family=Quicksand:wght@600&family=Silkscreen:wght@400;700&display=swap');
+
+.Promotions{
     width: 512px;
     height: 300px;
+    border: none;
+    border-radius: 10px;
     position: relative;
+}
+
+.img{
+    position: absolute;
+    z-index: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 10px;
+}
+
+.letter_container{
+    width: 512px;
+    height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border-radius: 10px;
-    overflow: hidden;
+    gap: 4vh;
+    margin-left: 48px;
 }
 
-.promotion div {
-    margin-left: 54px;
-}
-
-.promotion p {
+.letter{
     width: 271px;
+    z-index: 1;
     font-size: 24px;
-    font-style: normal;
     font-weight: 700;
-}
-
-.promotion button {
-    background-color: #3BB77E;
-    padding: 8px 15px;
+    font-family: quicksand;
+    color: #253D4E;
     display: flex;
-    gap: 10px;
-    color: white;
-    font-weight: 700;
-    border: none;
-    border-radius: 3px;
+    justify-content: center;
+    align-items: center;
 }
 
-.promotion img {
-    z-index: -1;
-    position: absolute;
-    bottom: 0;
-    right: 0;
+.button{
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 </style>
