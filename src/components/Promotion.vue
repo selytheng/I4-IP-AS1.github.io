@@ -1,64 +1,79 @@
 <template>
-  <div :style="{ background: bgColor }" class="promotion">
-    <div class="col1">
-      <p>{{ description }}</p>
-      <Button text="Shop now" color="#3BB77E" bgColor="#fff" />
+    <div class="promotion" :style="{backgroundColor: color}">
+        <img :src=image alt="logo">
+        <div>
+            <p>{{ title }}</p>
+            <button>
+                Shop Now
+                <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="fi-rs-arrow-small-right 1" clip-path="url(#clip0_1460_147)">
+                <g id="01 align center">
+                <path id="Vector" d="M10.345 4.32164L6.7675 0.744141L5.58917 1.92247L8.33333 4.66664H0V6.33331H8.33333L5.58917 9.07747L6.7675 10.2558L10.345 6.67831C10.6575 6.36576 10.833 5.94191 10.833 5.49997C10.833 5.05803 10.6575 4.63419 10.345 4.32164Z" fill="white"/>
+                </g>
+                </g>
+                <defs>
+                <clipPath id="clip0_1460_147">
+                <rect width="10.8333" height="10" fill="white" transform="translate(0 0.5)"/>
+                </clipPath>
+                </defs>
+                </svg>
+            </button>
+        </div>
     </div>
-    <div class="col2">
-      <img :src="image" />
-    </div>
-  </div>
 </template>
+
 <script>
-import Button from "../components/Button.vue";
-export default {
-  name: "Promotion",
-  components: {
-    Button,
-  },
-  props: [
-    "description",
-    "buttonComponent",
-    "bgColor",
-    "image",
-  ],
-};
+    export default {
+        name: 'Promotion',
+        props: ['title', 'color', 'image'],
+        methods: {
+            getImageUrl(image) {
+                return new URL(image, import.meta.url)
+            }
+        }
+    }
+
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap");
 .promotion {
-  width: auto;
-  flex-shrink: 0;
-  border-radius: 10px;
-  display: flex;
-  position: relative;
+    z-index: -1;
+    width: 512px;
+    height: 300px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-.col1 {
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: absolute;
-  left: 50px;
-  top: 70px;
-  gap: 20px;
-}
-.col1 p {
-  font-size: 25px;
-  font-weight: bolder;
-  font-family: "Quicksand", sans-serif;
-}
-.col2 {
-  width: 510px;
-  height: 249px;
-  margin-top: 40px;
+.promotion div {
+    margin-left: 54px;
 }
 
-img{
-  position: absolute;
-  right: 5px;
-  bottom: 0px;
+.promotion p {
+    width: 271px;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.promotion button {
+    background-color: #3BB77E;
+    padding: 8px 15px;
+    display: flex;
+    gap: 10px;
+    color: white;
+    font-weight: 700;
+    border: none;
+    border-radius: 3px;
+}
+
+.promotion img {
+    z-index: -1;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 </style>

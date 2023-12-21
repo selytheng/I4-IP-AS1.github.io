@@ -1,111 +1,152 @@
 <template>
-  <div class="product">
-    <div :style="{backgroundColor : bgColor}" class="row1">{{label}}</div>
-    <div class="row2"><img :src="img"/></div>
-    <div class="row3"></div>
-    <div class="row4">
-      <div class="title">{{title}}</div>
-      <div class="des">{{des}}</div>
-      <div class="star">
-        <img
-          v-for="index in 5"
-          :key="index"
-          src="../assets/images/favorite.svg"
-          alt=""
-        />
-        <img src="../assets/images/favorite.svg" alt="" />
-        (5.0) <br />
-        500 gram
-      </div>
+    <div class="product">
+        <div class="tag">{{ tag }}</div>
+        <div class="cover">
+            <img :src=image alt="">
+        </div>
+        <div class="info">
+            <p class="category">{{category}}</p>
+            <p class="name">{{ name }}</p>
+            <div class="rate" style="display: flex; align-items: center;">
+                <div>
+                    <Star v-for="(index) in rate" :key="index"  style="color: gold;"/>
+                    <Star v-for="(index) in (5-rate)" :key="index"  style="color: gray;"/>
+                </div>
+                <span style="margin-left: 10px; margin-bottom: 4px;">({{rate}})</span>
+            </div>
+            <p class="description">{{description}}</p>
+            <div class="buy-box">
+                <div>
+                    <span class="discount">${{discountPrice}}</span>
+                    <span class="price">${{sellPrice}}</span>
+                </div>
+                <input type="number" id="quantity">
+            </div>
+        </div>
     </div>
-
-    <div class="row5">
-      <div class="price">
-        <span>$2.51</span> <span class="linethrough">7$</span>
-      </div>
-      <div class="btn">
-        <div class="label">Add</div>
-        <div class="btn-icon"><i class="uil uil-plus"></i></div>
-      </div>
-    </div>
-  </div>
+    
 </template>
 
 <script>
+import Star from 'vue-material-design-icons/star.vue'
+
 export default {
-  name: "Product",
-  props: ["bgColor","label","img","title","des"]
-};
+    name: 'Product',
+    props: {
+        tag: String,
+        image: URL,
+        category: String,
+        name: String,
+        rate: Number,
+        description: String,
+        sellPrice: Number,
+        discountPrice: Number,
+    },
+    components: {
+        Star,
+    },
+    methods: {
+        getImageUrl(image) {
+            return new URL(image, import.meta.url)
+        }
+    }
+}
+
 </script>
 
 <style scoped>
-@import "https://unicons.iconscout.com/release/v4.0.0/css/line.css";
 
+p {
+    margin: 8px 0;
+}
 .product {
-  width: 300px;
-  height: 400px;
-  border: 1px solid #BCE3C9;
-  border-radius: 10px;
-  box-shadow: 20px 20px 40px 0px rgba(24, 24, 24, 0.07);
-  position: relative;
+    position: relative;
+    width: 298px;
+    height: 402px;
+    border-radius: 10px;
+    border-radius: 10px;
+    border: 1px solid #BCE3C9;
+    background: #FFF;
+    box-shadow: 20px 20px 40px 0px rgba(24, 24, 24, 0.07);
 }
-.row1 {
-  margin-top: 20px;
-  color: white;
-  background-color: #3bb77e;
-  width: 26%;
-  height: 11%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 0 20px 20px 0;
+
+.product .tag {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    padding: 10px 15px;
+    border-radius: 0px 30px 30px 0px;
+    background: var(--NestMart-Brand-1, #3BB77E);
+    display: inline-block;
 }
-.row2 {
-  display: flex;
-  justify-content: center;
+
+.product .cover {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.row4 {
-  width: 90%;
-  margin: auto;
+.product .info {
+    padding-left: 19px;
+    padding-right: 19px;
 }
-.row5{
-  position: absolute;
-  bottom: 30px;
-  margin-top: 15px;
-  display: flex;
-  width: 100%;
+
+.info .category {
+    color: #7E7E7E;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
 }
-.des {
-  font-family: Quicksand;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
+
+.info .name {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    width: 240px;
+    height: 40px;
+    overflow: hidden;
 }
-.star img {
-  width: 20px;
+
+.info .description {
+    color: var(--NestMart-TextBody, #7E7E7E);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    margin-top: 0;
+    margin-bottom: 14px;
 }
-.linethrough {
-  text-decoration: line-through;
+
+.buy-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.row5 {
-  padding: 0px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+.buy-box .price {
+    text-decoration-line: line-through;
+    color: var(--NestMart-TextBody, #7E7E7E);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    margin-left: 10px;
+} 
+
+.buy-box .discount {
+    color: var(--NestMart-Brand-1, #3BB77E);
+    font-family: Quicksand;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
 }
-.btn {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 70px;
-  height: 30px;
-  border: 1px solid;
-  border-radius: 5px;
-  padding: 0 10px;
-  color: #3bb77e;
-  background-color: #DEF9EC;
+
+.buy-box input {
+    width: 67px;
+    height: 29px;
+    border-radius: 4px;
+    border: 1px solid var(--NestMart-Brand-1, #3BB77E);
+    background: #FFF;
 }
-i {
-  font-size: 20px;
-}
+
+
 </style>
